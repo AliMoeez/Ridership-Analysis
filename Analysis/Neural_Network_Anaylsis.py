@@ -51,22 +51,27 @@ class NeuralNetworkAnalysis:
     def model(self):
         #Use a LSTM model twice and then move on to a relu and get one linear output
         self.model=Sequential()
-        self.model.add(LSTM(units=64,input_shape=(self.data.shape[1],1),return_sequences=True))
-        self.model.add(LSTM(units=32))
+        self.model.add(LSTM(units=32,input_shape=(self.data.shape[1],1),return_sequences=True))
         self.model.add(Dense(16,"relu"))
+        self.model.add(Dense(4,"relu"))
         self.model.add(Dense(1,"linear"))
 
     def model_compile(self):
-        pass
+        self.model.compile(loss="mse",optimizer=Adam(learning_rate=0.001))
+        self.model.fit(x=self.data,y=self.data_x_1,epochs=10,shuffle=True,batch_size=1,verbose=2)
 
     def model_predict(self):
-        pass
+        self.model_prediction=self.model.predict(self.df_weekly_ridership["Value"])
+        self.model_prediction=pd.DataFrame(data={"Month And Year":self.df_weekly_ridership["Month And Year"],"Prediction":self.model_prediction.flatten()})
 
     def model_inverse_transform_scale(self):
-        pass
+        self.df_weekly_ridership["Value"]=self.scaler.inverse_transform(self.df_weekly_ridership[["Value"]])
+        self.model_prediction["Prediction"]=self.scaler.inverse_transform(self.model_prediction[["Prediction"]])
 
     def model_plot(self):
-        pass
+        plt.plot(self.df_weekly_ridership["Month And Year"],self.df_weekly_ridership["Value"])
+        plt.plot(self.model_prediction["Month And Year"],self.model_prediction["Prediction"])
+        plt.show()
 
 neuralnetworkanalysis=NeuralNetworkAnalysis()
 neuralnetworkanalysis.create_timeline()
@@ -75,6 +80,7 @@ neuralnetworkanalysis.train_test_data()
 neuralnetworkanalysis.data_into_array()
 neuralnetworkanalysis.model()
 neuralnetworkanalysis.model_compile()
-neuralnetworkanalysis.model_inverse_transform_scale()
 neuralnetworkanalysis.model_predict()
+neuralnetworkanalysis.model_inverse_transform_scale()
+neuralnetworkanalysis.model_plot()
 
