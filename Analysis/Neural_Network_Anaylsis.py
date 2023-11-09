@@ -34,7 +34,7 @@ class NeuralNetworkAnalysis:
     def train_test_data(self):
         #Split The Data into one training set and one testing set
         #Training set gets 100 data points and Test sett gets the remainder 100 data points
-        self.train_data=self.df_weekly_ridership["Value"][:100] ; self.test_data=self.df_weekly_ridership["Value"][100:]
+        self.train_data=self.df_weekly_ridership["Value"] ; self.test_data=self.df_weekly_ridership["Value"][100:]
 
     def data_into_array(self):
         #Create datsasets where one dataset looks 10 points in the points, and another with the points 
@@ -50,14 +50,23 @@ class NeuralNetworkAnalysis:
 
     def model(self):
         #Use a LSTM model twice and then move on to a relu and get one linear output
+        tf.random.set_seed(42)
         self.model=Sequential()
-        self.model.add(LSTM(units=32,input_shape=(self.data.shape[1],1),return_sequences=True))
-        self.model.add(Dense(16,"relu"))
+        self.model.add(LSTM(units=128,input_shape=(self.data.shape[1],1),return_sequences=True))
+        #self.model.add(Dense(64,"relu"))
+      #  self.model.add(Dense(250,"relu"))
+      #  self.model.add(Dense(150,"relu"))
+   #     self.model.add(Dense(100,"relu"))
+    #    self.model.add(Dense(64,"relu"))
+    #    self.model.add(Dense(32,"relu"))
+    #    self.model.add(Dense(16,"relu"))
+        self.model.add(Dense(8,"relu"))
         self.model.add(Dense(4,"relu"))
+        self.model.add(Dense(2,"linear"))
         self.model.add(Dense(1,"linear"))
 
     def model_compile(self):
-        self.model.compile(loss="mse",optimizer=Adam(learning_rate=0.001))
+        self.model.compile(loss="mse",optimizer=Adam(learning_rate=0.001),metrics=['acc'])
         self.model.fit(x=self.data,y=self.data_x_1,epochs=10,shuffle=True,batch_size=1,verbose=2)
 
     def model_predict(self):
@@ -69,8 +78,11 @@ class NeuralNetworkAnalysis:
         self.model_prediction["Prediction"]=self.scaler.inverse_transform(self.model_prediction[["Prediction"]])
 
     def model_plot(self):
+        fig,ax=plt.subplots(1,figsize=(10,4))
+      #  ax.grid()
         plt.plot(self.df_weekly_ridership["Month And Year"],self.df_weekly_ridership["Value"])
         plt.plot(self.model_prediction["Month And Year"],self.model_prediction["Prediction"])
+        plt.setp(ax.get_xticklabels(),rotation=100)
         plt.show()
 
 neuralnetworkanalysis=NeuralNetworkAnalysis()
