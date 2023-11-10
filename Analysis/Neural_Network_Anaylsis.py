@@ -31,15 +31,14 @@ class NeuralNetworkAnalysis:
         self.scaler=MinMaxScaler((0,1))
         self.df_weekly_ridership["Value"]=self.scaler.fit_transform(self.df_weekly_ridership[["Value"]])
 
-    def train_test_data(self):
-        #Split The Data into one training set and one testing set
-        #Training set gets 100 data points and Test sett gets the remainder 100 data points
-        self.train_data=self.df_weekly_ridership["Value"] ; self.test_data=self.df_weekly_ridership["Value"][100:]
+    def train_data(self):
+        #Define The Training Data
+        self.train_data=self.df_weekly_ridership["Value"] 
 
     def data_into_array(self):
         #Create datsasets where one dataset looks 10 points in the points, and another with the points 
         #in the present. This will allow for better predictions in the neural network analysis. 
-        self.lookback_points=10 ; self.data=[] ; self.data_x_1=[]
+        self.lookback_points=1 ; self.data=[] ; self.data_x_1=[]
         for i in range(self.lookback_points,len(self.train_data)):
             self.data.append(self.train_data[i-self.lookback_points:i])
             self.data_x_1.append(self.train_data[i])
@@ -53,14 +52,6 @@ class NeuralNetworkAnalysis:
         tf.random.set_seed(42)
         self.model=Sequential()
         self.model.add(LSTM(units=128,input_shape=(self.data.shape[1],1),return_sequences=True))
-        #self.model.add(Dense(64,"relu"))
-      #  self.model.add(Dense(250,"relu"))
-      #  self.model.add(Dense(150,"relu"))
-   #     self.model.add(Dense(100,"relu"))
-    #    self.model.add(Dense(64,"relu"))
-    #    self.model.add(Dense(32,"relu"))
-    #    self.model.add(Dense(16,"relu"))
-        self.model.add(Dense(8,"relu"))
         self.model.add(Dense(4,"relu"))
         self.model.add(Dense(2,"linear"))
         self.model.add(Dense(1,"linear"))
@@ -70,7 +61,11 @@ class NeuralNetworkAnalysis:
         self.model.fit(x=self.data,y=self.data_x_1,epochs=10,shuffle=True,batch_size=1,verbose=2)
 
     def model_predict(self):
+        self.model_prediction=self.model.predict(self.df_weekly_ridership["Value"][-201:])
+        self.df_weekly_ridership["Value"]=self.df_weekly_ridership["Value"]+self.model_prediction.flatten()
         self.model_prediction=self.model.predict(self.df_weekly_ridership["Value"])
+
+    
         self.model_prediction=pd.DataFrame(data={"Month And Year":self.df_weekly_ridership["Month And Year"],"Prediction":self.model_prediction.flatten()})
 
     def model_inverse_transform_scale(self):
@@ -79,7 +74,6 @@ class NeuralNetworkAnalysis:
 
     def model_plot(self):
         fig,ax=plt.subplots(1,figsize=(10,4))
-      #  ax.grid()
         plt.plot(self.df_weekly_ridership["Month And Year"],self.df_weekly_ridership["Value"])
         plt.plot(self.model_prediction["Month And Year"],self.model_prediction["Prediction"])
         plt.setp(ax.get_xticklabels(),rotation=100)
@@ -88,7 +82,7 @@ class NeuralNetworkAnalysis:
 neuralnetworkanalysis=NeuralNetworkAnalysis()
 neuralnetworkanalysis.create_timeline()
 neuralnetworkanalysis.transform_scale_numbers()
-neuralnetworkanalysis.train_test_data()
+neuralnetworkanalysis.train_data()
 neuralnetworkanalysis.data_into_array()
 neuralnetworkanalysis.model()
 neuralnetworkanalysis.model_compile()
