@@ -1,0 +1,17 @@
+body {
+    background-color: black;
+}
+
+h1 {
+    background-color: grey;
+    color: white;
+    font-size: 15px;
+    font-family: "Arial"
+}
+
+h2 {
+    color: white;
+    font-size: 15px;
+    font-family: "Arial"
+}
+
