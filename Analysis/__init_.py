@@ -1,4 +1,4 @@
 from .Neural_Network_Anaylsis import NeuralNetworkAnalysis
 from .Summary_Statistics import SummaryStatistics
 from .T_Test import TTest
-from .map import Map
+from .map_analysis import Map
