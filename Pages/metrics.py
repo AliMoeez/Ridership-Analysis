@@ -24,19 +24,19 @@ layout=html.Div([
     html.H2(children="Metrics Page",style={"textAlign":"center"}),
 
     html.Div(
-        children=[html.H2("2022 Max")],
-        style={"display":"inline-block","width":"25%"},className='divBorder'),
+        children=[html.H2(html.Span("2022 Max \n ewLine"))],
+        style={"display":"inline-block","width":"25%","whiteSpace":"pre-line"},className='divBorder'),
 
     html.Div(
-        children=[html.H2("2021 Max")],
+        children=[html.H2(html.Span("2021 Max"))],
         style={"display":"inline-block","width":"25%"},className='divBorder'), 
 
     html.Div(
-        children=[html.H2("2020 Max")],
+        children=[html.H2(html.Span("2020 Max"))],
         style={"display":"inline-block","width":"25%"},className='divBorder'),
 
     html.Div(
-        children=[html.H2("2019 Max")],
+        children=[html.H2(html.Span("2019 Max"))],
         style={"display":"inline-block","width":"25%"},className='divBorder'),
 
 ])

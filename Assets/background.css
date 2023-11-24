@@ -12,13 +12,21 @@ h1 {
 h2 {
     color: white;
     font-size: 15px;
-    font-family: "Arial"
+    font-family: "Arial";
+}
+
+h2 span{
+    background-color: grey ; 
+}
+
+span{
+    padding : 5px; 
 }
 
 .divBorder{
-    border: 2px grey;
-    background-color: grey;
+    border: 12px grey;
 }
+
 
 a{ font-size: 15px;}
 
