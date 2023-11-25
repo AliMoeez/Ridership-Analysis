@@ -11,6 +11,7 @@ summarystatistics.quietest_station_2022()
 summarystatistics.busiest_month()
 summarystatistics.quietest_month()
 summarystatistics.busiest_station_per_year()
+summarystatistics.dataframe_max_stations()
 
 ttest=TTest()
 ttest.customer_day_vs_hours_per_day()
@@ -22,21 +23,22 @@ dash.register_page(__name__)
 
 layout=html.Div([
     html.H2(children="Metrics Page",style={"textAlign":"center"}),
+   
+    html.H2(html.Span("Max Ridership Per Year"),className='divBorder'),
 
-    html.Div(
-        children=[html.H2(html.Span("2022 Max \n ewLine"))],
-        style={"display":"inline-block","width":"25%","whiteSpace":"pre-line"},className='divBorder'),
+    dcc.Dropdown(id="MaxDropDown",options=["2022","2021","2020","2019"]),
 
-    html.Div(
-        children=[html.H2(html.Span("2021 Max"))],
-        style={"display":"inline-block","width":"25%"},className='divBorder'), 
-
-    html.Div(
-        children=[html.H2(html.Span("2020 Max"))],
-        style={"display":"inline-block","width":"25%"},className='divBorder'),
-
-    html.Div(
-        children=[html.H2(html.Span("2019 Max"))],
-        style={"display":"inline-block","width":"25%"},className='divBorder'),
+    dcc.Graph(id="MaxGraph"),
 
 ])
+
+@callback(
+        Output("MaxGraph","figure"),
+        Input("MaxDropDown","value")
+)
+
+def show_max_stations(year):
+    max_stations=summarystatistics.dataframe_max_stations()
+    figure=px.bar(max_stations,x="Year",y="Value",color="Station")
+    return figure
+    
