@@ -12,6 +12,7 @@ summarystatistics.busiest_month()
 summarystatistics.quietest_month()
 summarystatistics.busiest_station_per_year()
 summarystatistics.dataframe_max_stations()
+summarystatistics.dataframe_monthly_percent_change()
 
 ttest=TTest()
 ttest.customer_day_vs_hours_per_day()
@@ -21,24 +22,23 @@ ttest.graphs()
 
 dash.register_page(__name__)
 
+max_stations=summarystatistics.dataframe_max_stations()
+max_bar_figure=px.bar(max_stations,x="Year",y="Value",color="Station")
+max_bar_figure.update_layout(width=650,height=350,template="plotly_dark")
+
+monthly_percent_change=summarystatistics.dataframe_monthly_percent_change()
+monthly_percent_change_line_chart=px.line(monthly_percent_change,x="Period",y="Values")
+monthly_percent_change_line_chart.update_layout(width=650,height=350,template="plotly_dark")
+
 layout=html.Div([
     html.H2(children="Metrics Page",style={"textAlign":"center"}),
    
     html.H2(html.Span("Max Ridership Per Year"),className='divBorder'),
 
-    dcc.Dropdown(id="MaxDropDown",options=["2022","2021","2020","2019"]),
+    dcc.Graph(figure=max_bar_figure),
 
-    dcc.Graph(id="MaxGraph"),
+    dcc.Graph(figure=monthly_percent_change_line_chart),
 
 ])
 
-@callback(
-        Output("MaxGraph","figure"),
-        Input("MaxDropDown","value")
-)
-
-def show_max_stations(year):
-    max_stations=summarystatistics.dataframe_max_stations()
-    figure=px.bar(max_stations,x="Year",y="Value",color="Station")
-    return figure
     

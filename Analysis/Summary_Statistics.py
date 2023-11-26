@@ -47,6 +47,12 @@ class SummaryStatistics:
 
         return self.max_2021_ridership[0],self.max_2021_ridership[1],self.max_2020_ridership[0],self.max_2020_ridership[1],self.max_2019_ridership[0],self.max_2019_ridership[1]
     
+    def monthly_ridership_percent_change(self):
+        self.monthly_ridership_change=self.monthly_ridership["Value"].pct_change()
+        self.monthly_ridership_change=self.monthly_ridership_change*100
+
+        return self.monthly_ridership_change
+            
     def dataframe_max_stations(self):
         self.df_max_station=pd.DataFrame(
             data={
@@ -62,6 +68,21 @@ class SummaryStatistics:
 
 
         return self.df_max_station
+    
+    def dataframe_monthly_percent_change(self):
+        self.monthly_ridership_year_string=self.monthly_ridership["Year"].astype(str)
+
+
+        self.df_monthly_percent_change=pd.DataFrame(
+            data={
+                "Period": self.monthly_ridership["Period"] + " " + self.monthly_ridership_year_string,
+                "Values" : SummaryStatistics.monthly_ridership_percent_change(self)
+            }
+        )
+
+        print(self.df_monthly_percent_change)
+
+        return self.df_monthly_percent_change
 
 summarystatistics=SummaryStatistics()
 summarystatistics.busiest_station_2022()
@@ -69,20 +90,7 @@ summarystatistics.quietest_station_2022()
 summarystatistics.busiest_month()
 summarystatistics.quietest_month()
 summarystatistics.busiest_station_per_year()
+summarystatistics.monthly_ridership_percent_change()
 
 summarystatistics.dataframe_max_stations()
-
-
-      #     "Year":["2022","2021","2020","2019"],
-      #          
-      #          "Station":[SummaryStatistics.busiest_station_2022(self)[0],SummaryStatistics.busiest_station_per_year(self)[0],
-      #                      SummaryStatistics.busiest_station_per_year(self)[2],SummaryStatistics.busiest_station_per_year(self)[4]],
-      #          
-      ##          "Value":[SummaryStatistics.busiest_station_2022(self)[1],SummaryStatistics.busiest_station_per_year(self)[1],
-       #                     SummaryStatistics.busiest_station_per_year(self)[3],SummaryStatistics.busiest_station_per_year(self)[5]],
-
-
-       #            "2022":[SummaryStatistics.busiest_station_2022(self)[1]],
-       #         "2021":[SummaryStatistics.busiest_station_per_year(self)[1]],
-       #         "2020":[SummaryStatistics.busiest_station_per_year(self)[3]],
-       #         "2019":[SummaryStatistics.busiest_station_per_year(self)[5]]
+summarystatistics.dataframe_monthly_percent_change()
