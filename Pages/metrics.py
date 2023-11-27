@@ -1,5 +1,6 @@
 import dash
 from dash import Dash,html,dash_table,dcc,Input,Output,callback
+import dash_bootstrap_components as dbc
 import plotly.express as px
 
 from Analysis.Summary_Statistics import SummaryStatistics
@@ -30,15 +31,57 @@ monthly_percent_change=summarystatistics.dataframe_monthly_percent_change()
 monthly_percent_change_line_chart=px.line(monthly_percent_change,x="Period",y="Values")
 monthly_percent_change_line_chart.update_layout(width=650,height=350,template="plotly_dark")
 
-layout=html.Div([
+
+layout=dbc.Container([
+    dbc.Row([
+        dbc.Col([
+            html.H1(children="Metrics Page"),
+        ])
+    ]),
+
+    dbc.Row([
+        dbc.Col([
+            
+            html.H1(children="Max Ridership Per Year"),
+            dcc.Graph(figure=max_bar_figure),
+
+        ],width=5),
+        
+        
+        dbc.Col([
+            
+            html.H1(children="Percentage Change In Monthly Ridership"),
+            dcc.Graph(figure=monthly_percent_change_line_chart),
+       
+        ],justfity="left")
+    
+    
+    
+    ]),
+
+    dbc.Row([
+        dbc.Col([
+            html.H1(children="Metrics Two")
+        ],style={"display":"inline-block"}),
+    ]),
+
+
+
+])
+
+"""layout=html.Div([
     html.H2(children="Metrics Page",style={"textAlign":"center"}),
    
-    html.H2(html.Span("Max Ridership Per Year"),className='divBorder'),
+    html.H2(children="Max Ridership Per Year",className='divBorder',style={"display":"inline-block"}),
+
+    html.H2(children="THIS METRICS ",className='divBorder',style={"display":"inline-block"}),
 
     dcc.Graph(figure=max_bar_figure),
 
+    html.H2(children="Percentage Change In Monthly Ridership",className='divBorder'),
+
     dcc.Graph(figure=monthly_percent_change_line_chart),
 
-])
+])"""
 
     
