@@ -31,8 +31,43 @@ monthly_percent_change=summarystatistics.dataframe_monthly_percent_change()
 monthly_percent_change_line_chart=px.line(monthly_percent_change,x="Period",y="Values")
 monthly_percent_change_line_chart.update_layout(width=650,height=350,template="plotly_dark")
 
+layout_top=dbc.Container([
+    dbc.Row([
+        dbc.Col([
+            html.H1(children="Metrics Page"),
+        ])
+    ]),
+
+])
+
+
+card_max_customers=dbc.Card(
+    dbc.CardBody([
+        html.H1(children="Stations With The Most Visitors"),
+
+    ]),className="text-center m-4"
+
+)
 
 layout=dbc.Container([
+    dbc.Row(
+        dbc.Col(
+            html.H1(children="Metrics Page"),
+        )
+    ),
+    dbc.Row(
+        [dbc.Col(card_max_customers)]
+    )
+
+])
+
+
+
+
+
+
+
+"""layout=dbc.Container([
     dbc.Row([
         dbc.Col([
             html.H1(children="Metrics Page"),
@@ -40,10 +75,13 @@ layout=dbc.Container([
     ]),
 
     dbc.Row([
-        dbc.Col([
-            
+        dbc.Card(
+            dbc.CardBody([
             html.H1(children="Max Ridership Per Year"),
             dcc.Graph(figure=max_bar_figure),
+            ])
+
+        )
 
         ],width=5),
         
@@ -53,35 +91,8 @@ layout=dbc.Container([
             html.H1(children="Percentage Change In Monthly Ridership"),
             dcc.Graph(figure=monthly_percent_change_line_chart),
        
-        ],justfity="left")
+        ])
     
     
-    
-    ]),
+    ])"""
 
-    dbc.Row([
-        dbc.Col([
-            html.H1(children="Metrics Two")
-        ],style={"display":"inline-block"}),
-    ]),
-
-
-
-])
-
-"""layout=html.Div([
-    html.H2(children="Metrics Page",style={"textAlign":"center"}),
-   
-    html.H2(children="Max Ridership Per Year",className='divBorder',style={"display":"inline-block"}),
-
-    html.H2(children="THIS METRICS ",className='divBorder',style={"display":"inline-block"}),
-
-    dcc.Graph(figure=max_bar_figure),
-
-    html.H2(children="Percentage Change In Monthly Ridership",className='divBorder'),
-
-    dcc.Graph(figure=monthly_percent_change_line_chart),
-
-])"""
-
-    

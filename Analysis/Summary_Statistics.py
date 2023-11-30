@@ -80,8 +80,6 @@ class SummaryStatistics:
             }
         )
 
-        print(self.df_monthly_percent_change)
-
         return self.df_monthly_percent_change
 
 summarystatistics=SummaryStatistics()
