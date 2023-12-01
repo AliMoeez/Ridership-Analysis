@@ -21,7 +21,10 @@ ttest.customer_day_vs_km_per_day()
 ttest.customer_day_vs_average_daily_vehicles()
 ttest.graphs()
 
-dash.register_page(__name__)
+external_stylesheets=[dbc.themes.BOOTSTRAP]
+
+dash.register_page(__name__,external_stylesheets=external_stylesheets)
+
 
 max_stations=summarystatistics.dataframe_max_stations()
 max_bar_figure=px.bar(max_stations,x="Year",y="Value",color="Station")
@@ -31,36 +34,75 @@ monthly_percent_change=summarystatistics.dataframe_monthly_percent_change()
 monthly_percent_change_line_chart=px.line(monthly_percent_change,x="Period",y="Values")
 monthly_percent_change_line_chart.update_layout(width=650,height=350,template="plotly_dark")
 
-layout_top=dbc.Container([
-    dbc.Row([
-        dbc.Col([
-            html.H1(children="Metrics Page"),
-        ])
-    ]),
+layout=html.Div([
 
-])
+    dbc.Row(dbc.Col(html.H1("Metrics Page"))),
 
-
-card_max_customers=dbc.Card(
-    dbc.CardBody([
-        html.H1(children="Stations With The Most Visitors"),
-
-    ]),className="text-center m-4"
-
-)
-
-layout=dbc.Container([
     dbc.Row(
+        [
         dbc.Col(
-            html.H1(children="Metrics Page"),
-        )
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2(children="Title",className="card-text"),
+                    html.H2(children="TEXT",className="card-text"), 
+                ]),
+            color="dark"
+            )
+        ),
+                dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2(children="Title One",className="card-text"),
+                    html.H2(children="TEXT One",className="card-text"), 
+                ]),
+            color="dark"
+            )
+        ),
+        ]
     ),
+
     dbc.Row(
-        [dbc.Col(card_max_customers)]
-    )
+        [
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2(children="Title",className="card-text"),
+                    html.H2(children="TEXT",className="card-text"), 
+                ]),
+            color="dark"
+            )
+        ),
+                dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    html.H2(children="Title One",className="card-text"),
+                    html.H2(children="TEXT One",className="card-text"), 
+                ]),
+            color="dark"
+            )
+        ),
+        ]
+    ),
+
+
+    dbc.Row(
+        [
+        dbc.Col(html.H2("Max Ridership Per Year"),width=5), 
+        dbc.Col(html.H2("Monthly Ridership Change"),width=7), 
+         ]
+    ),
+
+        dbc.Row(
+        [
+        dbc.Col(dcc.Graph(figure=max_bar_figure),width=5), 
+        dbc.Col(dcc.Graph(figure=monthly_percent_change_line_chart),width=5), 
+         ]
+    ),
+
+
+
 
 ])
-
 
 
 
