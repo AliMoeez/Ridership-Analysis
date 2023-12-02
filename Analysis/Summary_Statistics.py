@@ -27,13 +27,17 @@ class SummaryStatistics:
     def busiest_month(self):
          self.busiest_month_ridership=self.monthly_ridership.loc[self.monthly_ridership["Value"].idxmax()]
 
-         return self.busiest_month_ridership[0],self.busiest_month_ridership[1],self.busiest_month_ridership[2]
+         print(self.busiest_month_ridership[0],self.busiest_month_ridership[1],self.busiest_month_ridership[2],self.busiest_month_ridership[3])
+
+         return self.busiest_month_ridership[0],self.busiest_month_ridership[1],self.busiest_month_ridership[2],self.busiest_month_ridership[3]
         
 
     def quietest_month(self):
         self.quietest_month_ridership=self.monthly_ridership.loc[self.monthly_ridership["Value"].idxmin()]
 
-        return self.quietest_month_ridership[0],self.quietest_month_ridership[1],self.quietest_month_ridership[2]
+      #  print(self.quietest_month_ridership)
+
+        return self.quietest_month_ridership[0],self.quietest_month_ridership[1],self.quietest_month_ridership[2],self.quietest_month_ridership[3]
 
     def busiest_station_per_year(self):
         self.daily_ridership_2021_route_customers=self.daily_ridership_2021[["Route","Customers\nper day"]]
@@ -52,6 +56,12 @@ class SummaryStatistics:
         self.monthly_ridership_change=self.monthly_ridership_change*100
 
         return self.monthly_ridership_change
+    
+    def top_ten_stations_2022(self):
+        self.station_and_value_2022=self.daily_ridership_2022[["Route","Customers\nper day"]]
+        self.station_and_value_2022=self.station_and_value_2022.sort_values("Customers\nper day",ascending=False)
+
+        return self.station_and_value_2022
             
     def dataframe_max_stations(self):
         self.df_max_station=pd.DataFrame(
@@ -89,6 +99,6 @@ summarystatistics.busiest_month()
 summarystatistics.quietest_month()
 summarystatistics.busiest_station_per_year()
 summarystatistics.monthly_ridership_percent_change()
-
+summarystatistics.top_ten_stations_2022()
 summarystatistics.dataframe_max_stations()
 summarystatistics.dataframe_monthly_percent_change()

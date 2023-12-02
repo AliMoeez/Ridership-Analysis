@@ -65,7 +65,6 @@ class NeuralNetworkAnalysis:
         self.df_weekly_ridership["Value"]=self.df_weekly_ridership["Value"]+self.model_prediction.flatten()
         self.model_prediction=self.model.predict(self.df_weekly_ridership["Value"])
 
-    
         self.model_prediction=pd.DataFrame(data={"Month And Year":self.df_weekly_ridership["Month And Year"],"Prediction":self.model_prediction.flatten()})
 
     def model_inverse_transform_scale(self):
