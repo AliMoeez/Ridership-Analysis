@@ -27,15 +27,11 @@ class SummaryStatistics:
     def busiest_month(self):
          self.busiest_month_ridership=self.monthly_ridership.loc[self.monthly_ridership["Value"].idxmax()]
 
-         print(self.busiest_month_ridership[0],self.busiest_month_ridership[1],self.busiest_month_ridership[2],self.busiest_month_ridership[3])
-
          return self.busiest_month_ridership[0],self.busiest_month_ridership[1],self.busiest_month_ridership[2],self.busiest_month_ridership[3]
         
 
     def quietest_month(self):
         self.quietest_month_ridership=self.monthly_ridership.loc[self.monthly_ridership["Value"].idxmin()]
-
-      #  print(self.quietest_month_ridership)
 
         return self.quietest_month_ridership[0],self.quietest_month_ridership[1],self.quietest_month_ridership[2],self.quietest_month_ridership[3]
 
@@ -56,11 +52,58 @@ class SummaryStatistics:
         self.monthly_ridership_change=self.monthly_ridership_change*100
 
         return self.monthly_ridership_change
+
+    def am_vehicle_peak(self):
+        self.df_am_vechicle_peak=pd.DataFrame(
+            data={
+                "Year":["2022","2021","2020","2019"],
+                "2022": np.average(self.daily_ridership_2022["Vehicles in\nAM peak"]),
+                "2021": np.average(self.daily_ridership_2021["Vehicles in a.m.\npeak"]),
+                "2020": np.average(self.daily_ridership_2020["Vehicles in a.m. peak"].dropna()),
+                "2019": np.average(self.daily_ridership_2019["Vehicles in a.m. peak"].dropna()),
+
+            }
+        )
+
+        print(self.df_am_vechicle_peak)
+
+        return self.df_am_vechicle_peak
+    
+    def pm_vehicle_peak(self):
+        self.df_pm_vechicle_peak=pd.DataFrame(
+            data={
+                "Year":["2022","2021","2020","2019"],
+                "2022": self.daily_ridership_2022["Vehicles in\nPM peak"],
+                "2021": self.daily_ridership_2021["Vehicles in p.m.\npeak"],
+                "2020": self.daily_ridership_2020["Vehicles in p.m. peak"],
+                "2019": self.daily_ridership_2019["Vehicles inp.m. peak"],
+            }
+        )
+        return self.df_pm_vechicle_peak
+    
+    def both_vechicle_peak(self):
+        self.df_both_vechicle_peak=pd.DataFrame(
+            data={
+
+                "2022": self.daily_ridership_2022["Vehicles in\nPM peak"],
+                "2021": self.daily_ridership_2021["Vehicles in p.m.\npeak"],
+                "2020": self.daily_ridership_2020["Vehicles in p.m. peak"],
+                "2019": self.daily_ridership_2019["Vehicles inp.m. peak"],
+                
+                "2022": self.daily_ridership_2022["Vehicles in\nAM peak"],
+                "2021": self.daily_ridership_2021["Vehicles in a.m.\npeak"],
+                "2020": self.daily_ridership_2020["Vehicles in a.m. peak"],
+                "2019": self.daily_ridership_2019["Vehicles in a.m. peak"],
+            }
+        )
+
+        return self.df_both_vechicle_peak
+
     
     def top_ten_stations_2022(self):
         self.station_and_value_2022=self.daily_ridership_2022[["Route","Customers\nper day"]]
         self.station_and_value_2022=self.station_and_value_2022.sort_values("Customers\nper day",ascending=False)
-
+        self.station_and_value_2022=self.station_and_value_2022.nlargest(10,"Customers\nper day")
         return self.station_and_value_2022
             
     def dataframe_max_stations(self):
@@ -99,6 +142,9 @@ summarystatistics.busiest_month()
 summarystatistics.quietest_month()
 summarystatistics.busiest_station_per_year()
 summarystatistics.monthly_ridership_percent_change()
+summarystatistics.am_vehicle_peak()
+summarystatistics.pm_vehicle_peak()
+summarystatistics.both_vechicle_peak()
 summarystatistics.top_ten_stations_2022()
 summarystatistics.dataframe_max_stations()
 summarystatistics.dataframe_monthly_percent_change()

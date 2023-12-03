@@ -36,8 +36,7 @@ monthly_percent_change_line_chart.update_layout(width=650,height=350,template="p
 
 top_stations=summarystatistics.top_ten_stations_2022()
 top_stations_figure=px.bar(top_stations,x="Customers\nper day",y="Route",orientation="h")
-top_stations_figure.update_layout(width=650,height=350,template="plotly_dark")
-
+top_stations_figure.update_layout(width=650,height=350,template="plotly_dark",yaxis=dict(autorange="reversed"))
 
 layout=html.Div([
 
@@ -82,7 +81,8 @@ layout=html.Div([
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
-                    html.H2(children="Title One",className="card-text"),
+                    html.H2(children="AM & PM Peak Vechicles 2019-2022",className="card-text"),
+                    dcc.Dropdown(id="AMPM",options=["Total","AM","PM"])
                     html.H2(children="TEXT One",className="card-text"), 
                 ]),
             color="dark"
@@ -93,12 +93,14 @@ layout=html.Div([
 
 
     dbc.Row([
-        dbc.Card(
-            dbc.CardBody([
-                dbc.Col(html.H2("Max Ridership Per Year",className="card-text"),width=5), 
-                dbc.Col(dcc.Graph(figure=max_bar_figure,className="card-text")), 
-            ]),
-            color="dark", style={"width":700}
+        dbc.Col(
+            dbc.Card(
+                dbc.CardBody([
+                    dbc.Col(html.H2("Max Ridership Per Year",className="card-text"),width=5), 
+                    dbc.Col(dcc.Graph(figure=max_bar_figure,className="card-text")), 
+                ]),
+                color="dark", style={"width":700}
+            )
         )
     ]),
 
@@ -115,6 +117,23 @@ layout=html.Div([
 
 
 ])
+
+def max_figure_function(year):
+    if year=="AM":
+        max_vechicles=summarystatistics.am_vehicle_peak()
+        max_vechicles_line_chart=px.line(max_vechicles,x=year,y="Year")
+        max_vechicles_line_chart.update_layout(width=650,height=350,template="plotly-dark")
+        return max_vechicles_line_chart
+    elif year!="PM":
+        max_vechicles=summarystatistics.pm_vehicle_peak()
+        max_vechicles_line_chart=px.line(max_vechicles,x=year,y="Year")
+        max_vechicles_line_chart.update_layout(width=650,height=350,template="plotly-dark")
+        return max_vechicles_line_chart
+    else:
+        max_vechicles=summarystatistics.am_vehicle_peak()
+        max_vechicles_line_chart=px.line(max_vechicles,x=year.columns,y="Year")
+        max_vechicles_line_chart.update_layout(width=650,height=350,template="plotly-dark")  
+        return max_vechicles_line_chart     
 
 
 
