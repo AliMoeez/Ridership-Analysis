@@ -57,10 +57,8 @@ class SummaryStatistics:
         self.df_am_vechicle_peak=pd.DataFrame(
             data={
                 "Year":["2022","2021","2020","2019"],
-                "2022": np.average(self.daily_ridership_2022["Vehicles in\nAM peak"]),
-                "2021": np.average(self.daily_ridership_2021["Vehicles in a.m.\npeak"]),
-                "2020": np.average(self.daily_ridership_2020["Vehicles in a.m. peak"].dropna()),
-                "2019": np.average(self.daily_ridership_2019["Vehicles in a.m. peak"].dropna()),
+                "Value": [np.average(self.daily_ridership_2022["Vehicles in\nAM peak"]), np.average(self.daily_ridership_2021["Vehicles in a.m.\npeak"]), 
+                          np.average(self.daily_ridership_2020["Vehicles in a.m. peak"].dropna()), np.average(self.daily_ridership_2019["Vehicles in a.m. peak"].dropna())]
 
             }
         )
@@ -73,12 +71,13 @@ class SummaryStatistics:
         self.df_pm_vechicle_peak=pd.DataFrame(
             data={
                 "Year":["2022","2021","2020","2019"],
-                "2022": self.daily_ridership_2022["Vehicles in\nPM peak"],
-                "2021": self.daily_ridership_2021["Vehicles in p.m.\npeak"],
-                "2020": self.daily_ridership_2020["Vehicles in p.m. peak"],
-                "2019": self.daily_ridership_2019["Vehicles inp.m. peak"],
+                "Value": [np.average(self.daily_ridership_2022["Vehicles in\nPM peak"]),np.average(self.daily_ridership_2021["Vehicles in p.m.\npeak"]), 
+                        np.average(self.daily_ridership_2020["Vehicles in p.m. peak"].dropna()),np.average(self.daily_ridership_2019["Vehicles inp.m. peak"].dropna())]
             }
         )
+
+        print(self.df_pm_vechicle_peak)
+
         return self.df_pm_vechicle_peak
     
     def both_vechicle_peak(self):
@@ -96,6 +95,7 @@ class SummaryStatistics:
                 "2019": self.daily_ridership_2019["Vehicles in a.m. peak"],
             }
         )
+
 
         return self.df_both_vechicle_peak
 

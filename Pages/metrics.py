@@ -82,7 +82,8 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2(children="AM & PM Peak Vechicles 2019-2022",className="card-text"),
-                    dcc.Dropdown(id="AMPM",options=["Total","AM","PM"])
+                    dcc.Dropdown(id="AMPM",options=["Total","AM","PM"]),
+                    dcc.Graph(id="AMPM Graph"),
                     html.H2(children="TEXT One",className="card-text"), 
                 ]),
             color="dark"
@@ -118,21 +119,27 @@ layout=html.Div([
 
 ])
 
+@callback(
+    Output("AMPM Graph","figure"),
+    Input("AMPM","value")
+)
+
 def max_figure_function(year):
     if year=="AM":
+        print("HERE")
         max_vechicles=summarystatistics.am_vehicle_peak()
-        max_vechicles_line_chart=px.line(max_vechicles,x=year,y="Year")
-        max_vechicles_line_chart.update_layout(width=650,height=350,template="plotly-dark")
+        max_vechicles_line_chart=px.line(max_vechicles,x="Year",y="Value")
+        max_vechicles_line_chart.update_layout(width=650,height=350)
         return max_vechicles_line_chart
-    elif year!="PM":
+    elif year=="PM":
         max_vechicles=summarystatistics.pm_vehicle_peak()
-        max_vechicles_line_chart=px.line(max_vechicles,x=year,y="Year")
-        max_vechicles_line_chart.update_layout(width=650,height=350,template="plotly-dark")
+        max_vechicles_line_chart=px.line(max_vechicles,x="Year",y="Value")
+        max_vechicles_line_chart.update_layout(width=650,height=350)
         return max_vechicles_line_chart
     else:
-        max_vechicles=summarystatistics.am_vehicle_peak()
-        max_vechicles_line_chart=px.line(max_vechicles,x=year.columns,y="Year")
-        max_vechicles_line_chart.update_layout(width=650,height=350,template="plotly-dark")  
+        max_vechicles=summarystatistics.both_vechicle_peak()
+        max_vechicles_line_chart=px.line(max_vechicles,x="Year",y="Value")
+        max_vechicles_line_chart.update_layout(width=650,height=350)  
         return max_vechicles_line_chart     
 
 

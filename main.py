@@ -4,7 +4,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import dash_bootstrap_components as dbc
 
-
 external_stylesheets=[dbc.themes.BOOTSTRAP]
 
 app=Dash(__name__,use_pages=True,external_stylesheets=external_stylesheets)
