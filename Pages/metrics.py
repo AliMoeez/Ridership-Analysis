@@ -1,7 +1,9 @@
 import dash
 from dash import Dash,html,dash_table,dcc,Input,Output,callback
 import dash_bootstrap_components as dbc
+import plotly.graph_objects as go
 import plotly.express as px
+from plotly.subplots import make_subplots
 
 from Analysis.Summary_Statistics import SummaryStatistics
 from Analysis.T_Test import TTest
@@ -137,8 +139,15 @@ def max_figure_function(year):
         max_vechicles_line_chart.update_layout(width=650,height=350)
         return max_vechicles_line_chart
     else:
-        max_vechicles=summarystatistics.both_vechicle_peak()
-        max_vechicles_line_chart=px.line(max_vechicles,x="Year",y="Value")
+        max_vechicles_am=summarystatistics.am_vehicle_peak()
+        max_vechicles_pm=summarystatistics.pm_vehicle_peak()
+        
+        max_vechicles_line_chart_am=px.line(max_vechicles_am,x="Year",y="Value")
+        max_vechicles_line_chart_pm=px.line(max_vechicles_pm,x="Year",y="Value")
+
+        max_vechicles_line_chart=go.Figure(data=max_vechicles_line_chart_am.data+max_vechicles_line_chart_pm.data)
+
+
         max_vechicles_line_chart.update_layout(width=650,height=350)  
         return max_vechicles_line_chart     
 
