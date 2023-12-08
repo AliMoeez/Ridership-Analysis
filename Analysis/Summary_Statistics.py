@@ -104,7 +104,20 @@ class SummaryStatistics:
         self.station_and_value_2022=self.daily_ridership_2022[["Route","Customers\nper day"]]
         self.station_and_value_2022=self.station_and_value_2022.sort_values("Customers\nper day",ascending=False)
         self.station_and_value_2022=self.station_and_value_2022.nlargest(10,"Customers\nper day")
-        return self.station_and_value_2022
+
+        self.station_and_value_2021=self.daily_ridership_2021[["Route","Customers\nper day"]]
+        self.station_and_value_2021=self.station_and_value_2021.sort_values("Customers\nper day",ascending=False)
+        self.station_and_value_2021=self.station_and_value_2021.nlargest(10,"Customers\nper day")
+
+        self.station_and_value_2020=self.daily_ridership_2020[["Route","Customers per day"]]
+        self.station_and_value_2020=self.station_and_value_2020.sort_values("Customers per day",ascending=False)
+        self.station_and_value_2020=self.station_and_value_2020.nlargest(10,"Customers per day")
+
+        self.station_and_value_2019=self.daily_ridership_2019[["Route","Customers per day"]]
+        self.station_and_value_2019=self.station_and_value_2019.sort_values("Customers per day",ascending=False)
+        self.station_and_value_2019=self.station_and_value_2019.nlargest(10,"Customers per day")
+        
+        return self.station_and_value_2022,self.station_and_value_2021,self.station_and_value_2020,self.station_and_value_2019
             
     def dataframe_max_stations(self):
         self.df_max_station=pd.DataFrame(
