@@ -27,6 +27,24 @@ span{
     border: 12px grey;
 }
 
+.Select-control{
+    background-color: black !important;
+    color: #ffffff;
+
+}
+
+.Select-menu-outer{
+    background-color: black;
+    color: #ffffff;
+    
+}
+
+.Select-value-label{
+    background-color: black;
+    color: #ffffff !important;
+    
+}
+
 
 a{ font-size: 15px;}
 

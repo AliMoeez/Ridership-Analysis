@@ -71,7 +71,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2("Most Used Stations in 2022",className="card-text"),
-                    dcc.Dropdown(id="T10SPY",options=["2022","2021","2020","2019"]),
+                    dcc.Dropdown(id="T10SPY",options=["2022","2021","2020","2019"],value="2022"),
                     dcc.Graph(id="T10SPY Graph"),
                 ]),
             color="dark"
@@ -117,14 +117,15 @@ layout=html.Div([
 
 ])
 
+
 @callback(
     Output("T10SPY Graph","figure"),
-    Input("T10SPY","value")
+    Input("T10SPY","value"),
+  
 )
-
-
 def top_ten_stations_function(year):
     if year=="2022":
+        print("HERE")
         top_stations=summarystatistics.top_ten_stations_2022()[0]
         top_stations_figure=px.bar(top_stations,x="Customers\nper day",y="Route",orientation="h")
         top_stations_figure.update_layout(width=650,height=350,template="plotly_dark",yaxis=dict(autorange="reversed"))
@@ -151,14 +152,14 @@ def top_ten_stations_function(year):
     Input("AMPM","value")
 )
 
-def max_figure_function(year):
-    if year=="AM":
+def max_figure_function(years):
+    if years=="AM":
         print("HERE")
         max_vechicles=summarystatistics.am_vehicle_peak()
         max_vechicles_line_chart=px.line(max_vechicles,x="Year",y="Value")
         max_vechicles_line_chart.update_layout(width=650,height=350,template="plotly_dark")
         return max_vechicles_line_chart
-    elif year=="PM":
+    elif years=="PM":
         max_vechicles=summarystatistics.pm_vehicle_peak()
         max_vechicles_line_chart=px.line(max_vechicles,x="Year",y="Value")
         max_vechicles_line_chart.update_layout(width=650,height=350,template="plotly_dark")
