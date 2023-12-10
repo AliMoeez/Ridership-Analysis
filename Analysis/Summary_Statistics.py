@@ -63,8 +63,6 @@ class SummaryStatistics:
             }
         )
 
-        print(self.df_am_vechicle_peak)
-
         return self.df_am_vechicle_peak
     
     def pm_vehicle_peak(self):
@@ -76,7 +74,6 @@ class SummaryStatistics:
             }
         )
 
-        print(self.df_pm_vechicle_peak)
 
         return self.df_pm_vechicle_peak
     
