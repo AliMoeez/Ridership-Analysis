@@ -11,7 +11,7 @@ map_df=map_data.data()
 map_figure=px.scatter_mapbox(map_df,lat="Latitude",lon="Longitude",
                              color="Station Name",size="Ridership (2014 Daily Average)",
                              color_continuous_scale=px.colors.cyclical.IceFire,size_max=15,zoom=10,mapbox_style="carto-positron")
-map_figure.update_layout(plot_bgcolor="#000000",paper_bgcolor="#121221",font_color="#FFFFFF")
+map_figure.update_layout(template="plotly_dark",font_color="#FFFFFF")
 
 dash.register_page(__name__)
 

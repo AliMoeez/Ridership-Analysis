@@ -38,7 +38,7 @@ monthly_percent_change_line_chart.update_layout(width=690,height=350,template="p
 
 layout=html.Div([
 
-    dbc.Row(dbc.Col(html.H1("Metrics Page"))),
+    dbc.Row(dbc.Col(html.H2(children="Metrics Page",style={"textAlign":"center"}))),
 
     
     dbc.Row(
@@ -47,7 +47,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2(children="Busiest Month",className="text-center"),
-                    html.H2(children=f"{busy_month[2]} {busy_month[1]} : {busy_month[3]:,} average daily riders",className="text-center"), 
+                    html.H3(children=f"{busy_month[2]} {busy_month[1]} : {busy_month[3]:,} average daily riders",className="text-center"), 
                 ]),
             color="dark"
             )
@@ -56,7 +56,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2(children="Quietest Month",className="text-center"),
-                    html.H2(children=f"{quiet_month[2]} {quiet_month[1]} : {quiet_month[3]:,} average daily riders",className="text-center"),
+                    html.H3(children=f"{quiet_month[2]} {quiet_month[1]} : {quiet_month[3]:,} average daily riders",className="text-center"),
                 ]),
             color="dark"
             )
