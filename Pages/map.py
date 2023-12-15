@@ -8,8 +8,12 @@ from Analysis.map_analysis import Map
 external_stylesheets=[dbc.themes.BOOTSTRAP]
 
 map_data=Map()
+map_data.max_min_stations()
+map_data.distance()
 
 map_df=map_data.data()
+
+map_analysis=map_data.map_other_data()
 
 map_figure=px.scatter_mapbox(map_df,lat="Latitude",lon="Longitude",
                              color="Station Name",size="Ridership (2014 Daily Average)",
