@@ -43,6 +43,8 @@ class Map:
             }
         )
 
+        print(self.df["Average Distance Between Stations"][0])
+
         return self.df
 
 
