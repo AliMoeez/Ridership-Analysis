@@ -70,7 +70,7 @@ class NeuralNetworkAnalysis:
     def model_inverse_transform_scale(self):
         self.df_weekly_ridership["Value"]=self.scaler.inverse_transform(self.df_weekly_ridership[["Value"]])
         self.model_prediction["Prediction"]=self.scaler.inverse_transform(self.model_prediction[["Prediction"]])
-        return self.df_weekly_ridership["Month And Year"],self.df_weekly_ridership["Value"], self.model_prediction["Prediction"]
+        return self.df_weekly_ridership, self.model_prediction
 
     def model_plot(self):
         fig,ax=plt.subplots(1,figsize=(10,4))
