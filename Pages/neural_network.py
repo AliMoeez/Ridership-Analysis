@@ -23,12 +23,18 @@ external_stylesheets=[dbc.themes.BOOTSTRAP]
 
 dash.register_page(__name__,external_stylesheets=external_stylesheets)
 
-neural_network_figure_data=px.line(data_value,x="Month And Year",y="Value")
-neural_network_figure_prediction=px.line(data_prediction,x="Month And Year",y="Prediction",legned=True)
+"""neural_network_figure_data=px.line(data_value,x="Month And Year",y="Value")
+neural_network_figure_prediction=px.line(data_prediction,x="Month And Year",y="Prediction")
 neural_network_figure_prediction['data'][0]['line']['color']="#FF0000"
 
 neutal_network_figure=go.Figure(data=neural_network_figure_data.data+neural_network_figure_prediction.data)
-neutal_network_figure.update_layout(template="plotly_dark")
+neutal_network_figure.update_layout(template="plotly_dark")"""
+
+neural_network_figure=make_subplots(rows=1,cols=1)
+neural_network_figure.update_layout(template="plotly_dark")
+neural_network_figure.append_trace(go.Scatter(x=data_value["Month And Year"],y=data_value["Value"],mode="lines",name="Original Data"),row=1,col=1)
+neural_network_figure.append_trace(go.Scatter(x=data_prediction["Month And Year"],y=data_prediction["Prediction"],mode="lines",name="Neural Network Prediction"),row=1,col=1)
+
 
 layout=html.Div([
     
@@ -70,7 +76,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2(children="Model Optimizer",style={"textAlign":"center"}),
-                
+
                 ]),
             color="dark"
             )
@@ -92,7 +98,7 @@ layout=html.Div([
         dbc.Col(
             dbc.Card(
                 dbc.CardBody([
-                    dcc.Graph(figure=neutal_network_figure)
+                    dcc.Graph(figure=neural_network_figure)
 
                 ]),
             color="dark"

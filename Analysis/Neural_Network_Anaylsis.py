@@ -11,6 +11,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dropout
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_squared_error 
 
 class NeuralNetworkAnalysis:
     def __init__(self) -> None:
@@ -18,6 +19,8 @@ class NeuralNetworkAnalysis:
         self.df=pd.read_excel(r"Data\Ridership_Data.xlsx",sheet_name=None)
         self.df_weekly_ridership=self.df["Weekly TTC Ridership Data"]
         self.df_weekly_ridership["Month And Year"]=self.df_weekly_ridership["Period"]+ " " +self.df_weekly_ridership["Year"].astype(str)
+
+        self.epochs=100
 
     def create_timeline(self):
         #Add Timeline to sucesfully run the Neural Network
@@ -58,7 +61,8 @@ class NeuralNetworkAnalysis:
 
     def model_compile(self):
         self.model.compile(loss="mse",optimizer=Adam(learning_rate=0.001),metrics=['acc'])
-        self.model.fit(x=self.data,y=self.data_x_1,epochs=10,shuffle=True,batch_size=1,verbose=2)
+        self.model.fit(x=self.data,y=self.data_x_1,epochs=self.epochs,shuffle=True,batch_size=10,verbose=0)
+    
 
     def model_predict(self):
         self.model_prediction=self.model.predict(self.df_weekly_ridership["Value"][-201:])
@@ -66,6 +70,12 @@ class NeuralNetworkAnalysis:
         self.model_prediction=self.model.predict(self.df_weekly_ridership["Value"])
 
         self.model_prediction=pd.DataFrame(data={"Month And Year":self.df_weekly_ridership["Month And Year"],"Prediction":self.model_prediction.flatten()})
+
+    def model_parameters(self):
+        self.model_accuracy=[]
+        self.model_accuracy.append(self.model.evaluate(self.data,self.data_x_1,verbose=0)[1]*100)
+        self.mse=mean_squared_error(self.df_weekly_ridership["Value"],self.model_prediction["Prediction"])
+        return self.epochs,self.mse,self.model_accuracy
 
     def model_inverse_transform_scale(self):
         self.df_weekly_ridership["Value"]=self.scaler.inverse_transform(self.df_weekly_ridership[["Value"]])
@@ -87,5 +97,6 @@ neuralnetworkanalysis.data_into_array()
 neuralnetworkanalysis.model()
 neuralnetworkanalysis.model_compile()
 neuralnetworkanalysis.model_predict()
+neuralnetworkanalysis.model_parameters()
 neuralnetworkanalysis.model_inverse_transform_scale()
 
