@@ -17,7 +17,7 @@ Map Page:
 Metrics Page:
 
 
-<img width="1108" alt="metrics_1" src="https://github.com/AliMoeez/Ridership-Analysis/assets/77748153/5ccaa77e-db3f-44ce-9e75-cd41e1da7b06">
+<img width="1108" alt="metrics_1" src="https://github.com/AliMoeez/Ridership-Analysis/assets/77748153/d4b82c05-9dff-4439-83d9-2d23bc4aec3a">
 <img width="1115" alt="metrics_2" src="https://github.com/AliMoeez/Ridership-Analysis/assets/77748153/451d96fe-c5dc-4c18-8064-0fe2ee7ba254">
 
 Neural Network Page:
