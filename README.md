@@ -5,7 +5,7 @@ The dashboard will display several analyses regarding TTC ridership data. This r
 
 --> Neural Network Predictions Of Monthly Ridership
 --> Heat Map of the most popular stations
---> Metics TTC Ridership Data.
+--> Metrics of TTC Ridership Data.
 
 Below are images of the completed Dashboard
 
