@@ -16,19 +16,17 @@ neuralnetworkanalysis.model()
 neuralnetworkanalysis.model_compile()
 neuralnetworkanalysis.model_predict()
 
+
+model_number_of_epochs=neuralnetworkanalysis.model_parameters()[0]
+model_mse=round(neuralnetworkanalysis.model_parameters()[1],4)
+model_accruacy=round(neuralnetworkanalysis.model_parameters()[2][0],4)
+
 data_value=neuralnetworkanalysis.model_inverse_transform_scale()[0]
 data_prediction=neuralnetworkanalysis.model_inverse_transform_scale()[1]
 
 external_stylesheets=[dbc.themes.BOOTSTRAP]
 
 dash.register_page(__name__,external_stylesheets=external_stylesheets)
-
-"""neural_network_figure_data=px.line(data_value,x="Month And Year",y="Value")
-neural_network_figure_prediction=px.line(data_prediction,x="Month And Year",y="Prediction")
-neural_network_figure_prediction['data'][0]['line']['color']="#FF0000"
-
-neutal_network_figure=go.Figure(data=neural_network_figure_data.data+neural_network_figure_prediction.data)
-neutal_network_figure.update_layout(template="plotly_dark")"""
 
 neural_network_figure=make_subplots(rows=1,cols=1)
 neural_network_figure.update_layout(template="plotly_dark")
@@ -46,6 +44,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2(children="Number of Epochs",style={"textAlign":"center"}),
+                    html.H3(children=model_number_of_epochs,style={"textAlign":"center"}),
                 
                 ]),
             color="dark"
@@ -56,6 +55,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2(children="Mean Standard Error (MSE)",style={"textAlign":"center"}),
+                    html.H3(children=model_mse,style={"textAlign":"center"}),
                 
                 ]),
             color="dark"
@@ -66,6 +66,7 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2(children="Accuracy",style={"textAlign":"center"}),
+                    html.H3(children=model_accruacy,style={"textAlign":"center"}),
                 
                 ]),
             color="dark"
@@ -76,6 +77,8 @@ layout=html.Div([
             dbc.Card(
                 dbc.CardBody([
                     html.H2(children="Model Optimizer",style={"textAlign":"center"}),
+                    html.H3(children="Adam",style={"textAlign":"center"}),
+                    
 
                 ]),
             color="dark"

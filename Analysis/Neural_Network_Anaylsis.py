@@ -20,7 +20,7 @@ class NeuralNetworkAnalysis:
         self.df_weekly_ridership=self.df["Weekly TTC Ridership Data"]
         self.df_weekly_ridership["Month And Year"]=self.df_weekly_ridership["Period"]+ " " +self.df_weekly_ridership["Year"].astype(str)
 
-        self.epochs=100
+        self.epochs=10
 
     def create_timeline(self):
         #Add Timeline to sucesfully run the Neural Network
@@ -61,7 +61,7 @@ class NeuralNetworkAnalysis:
 
     def model_compile(self):
         self.model.compile(loss="mse",optimizer=Adam(learning_rate=0.001),metrics=['acc'])
-        self.model.fit(x=self.data,y=self.data_x_1,epochs=self.epochs,shuffle=True,batch_size=10,verbose=0)
+        self.model.fit(x=self.data,y=self.data_x_1,epochs=self.epochs,shuffle=True,batch_size=1,verbose=0)
     
 
     def model_predict(self):
